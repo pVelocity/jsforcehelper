@@ -2,7 +2,7 @@
 
 This is an npm module design to perform common jsforce uses with pVelocity's [pvserver](https://github.com/pVelocity/pvserver).
 
-##Getting Started
+## Getting Started
 
 Install the ``jsforcehelper`` module.
 
@@ -57,10 +57,10 @@ jsfh.connectWithSession(jsapi).then(function(success) {
 });
 ```
 
-##Methods
+## Methods
 All methods implement [jsforce](https://jsforce.github.io/document/) methods to perform their action, returning a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
-###``connect(jsapi, [pollInterval], [pollTimeout])``
+### ``connect(jsapi, [pollInterval], [pollTimeout])``
 Connect to a known Salesforce server using a username and password.
 - `jsapi` `<Object>`
 - `pollInterval` `<Number>`
@@ -81,7 +81,7 @@ jsfh.connect(jsapi).then(function(success) {
 });
 ```
 
-###``connectWithSession(jsapi, [pollInterval], [pollTimeout])``
+### ``connectWithSession(jsapi, [pollInterval], [pollTimeout])``
 Connect to a known Salesforce server using an access token.
 - `jsapi` `<Object>`
 - `pollInterval` `<Number>`
@@ -101,7 +101,7 @@ jsfh.connectWithSession(jsapi).then(function(success) {
 });
 ```
 
-###``query(jsapi, soql)``
+### ``query(jsapi, soql)``
 Query using ``soql`` with an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``. If query exceeds the record limit, this method will query more until all records are retrieved.
 - `jsapi` `<Object>`
 - `soql` `<String>`
@@ -116,7 +116,7 @@ jsfh.query(jsapi, 'SELECT Id, Username FROM User WHERE IsActive = true').then(fu
 });
 ```
 
-###``describe(jsapi, objectName)``
+### ``describe(jsapi, objectName)``
 Fetch the meta info for ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -131,7 +131,7 @@ jsfh.describe(jsapi, 'User').then(function(result) {
 });
 ```
 
-###``insert(jsapi, objectName, records)``
+### ``insert(jsapi, objectName, records)``
 Insert ``records`` into ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -152,7 +152,7 @@ jsfh.insert(jsapi, 'Account', [
 });
 ```
 
-###``delete(jsapi, objectName, records)``
+### ``delete(jsapi, objectName, records)``
 Delete ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -171,7 +171,7 @@ jsfh.delete(jsapi, 'Account', [
 });
 ```
 
-###``update(jsapi, objectName, records)``
+### ``update(jsapi, objectName, records)``
 Update ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -190,7 +190,7 @@ jsfh.update(jsapi, 'Account', [
 });
 ```
 
-###``upsert(jsapi, objectName, records, extIdField)``
+### ``upsert(jsapi, objectName, records, extIdField)``
 Upsert ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -210,7 +210,7 @@ jsfh.upsert(jsapi, 'Account', [
 });
 ```
 
-###``bulkInsert(jsapi, objectName, records)``
+### ``bulkInsert(jsapi, objectName, records)``
 Bulk insert ``records`` into ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -231,7 +231,7 @@ jsfh.bulkInsert(jsapi, 'Account', [
 });
 ```
 
-###``bulkDelete(jsapi, objectName, records)``
+### ``bulkDelete(jsapi, objectName, records)``
 Bulk delete ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -250,7 +250,7 @@ jsfh.bulkDelete(jsapi, 'Account', [
 });
 ```
 
-###``bulkUpdate(jsapi, objectName, records)``
+### ``bulkUpdate(jsapi, objectName, records)``
 Bulk update ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -269,7 +269,7 @@ jsfh.bulkUpdate(jsapi, 'Account', [
 });
 ```
 
-###``bulkUpsert(jsapi, objectName, records, extIdField)``
+### ``bulkUpsert(jsapi, objectName, records, extIdField)``
 Bulk upsert ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
@@ -289,7 +289,7 @@ jsfh.bulkUpsert(jsapi, 'Account', [
 });
 ```
 
-##License
+## License
 
 Copyright (c) 2016, pVelocity Inc
 
