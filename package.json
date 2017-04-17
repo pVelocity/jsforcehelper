@@ -1,0 +1,26 @@
+{
+  "name": "jsforcehelper",
+  "version": "1.0.0",
+  "description": "This is an npm module design to perform common jsforce uses with pVelocity's pvserver",
+  "main": "jsforcehelper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pVelocity/jsforcehelper.git"
+  },
+  "keywords": [
+    "pVelocity",
+    "pvserver"
+  ],
+  "author": "Allen Allen Chung <allen.chung@pvelocity.com> (http://www.pvelocity.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pVelocity/jsforcehelper/issues"
+  },
+  "homepage": "https://github.com/pVelocity/jsforcehelper#readme",
+  "dependencies": {
+    "jsforce": "^1.7.1"
+  }
+}
