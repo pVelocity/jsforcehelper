@@ -28,12 +28,7 @@ The ``jsforce.Connection`` is accessible in ``jsapi.sfdcConn``.
 
 To connect to a known Salesforce server using a username and password.
 ```js
-jsapi.sfdc = {
-	username: 'username',
-	password: 'password',
-	url: 'url'
-};
-jsfh.connect(jsapi).then(function(success) {
+jsfh.connect(jsapi, 'username', 'password', 'url').then(function(success) {
     if (success) {
         console.log('Success');
     } else {

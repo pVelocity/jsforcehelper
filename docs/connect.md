@@ -1,16 +1,14 @@
-### ``connect(jsapi, [pollInterval], [pollTimeout])``
+### ``connect(jsapi, username, password, url, [pollInterval], [pollTimeout])``
 Connect to a known Salesforce server using a username and password.
 - `jsapi` `<Object>`
+- `username` `<String>`
+- `password` `<String>`
+- `url` `<String>`
 - `pollInterval` `<Number>`
 - `pollTimeout` `<Number>`
 
 ```js
-jsapi.sfdc = {
-	username: 'username',
-	password: 'password',
-	url: 'url'
-};
-jsfh.connect(jsapi).then(function(success) {
+jsfh.connect(jsapi, username, password, url).then(function(success) {
     if (success) {
         console.log('Success');
     } else {

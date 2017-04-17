@@ -8,7 +8,7 @@
 var jsforce = require('jsforce');
 
 module.exports = {
-    connect: function(jsapi, pollInterval, pollTimeout) {
+    connect: function(jsapi, username, password, url, pollInterval, pollTimeout) {
         return new jsapi.pvserver.Promise(function(resolve, reject) {
             if (PV.isObject(jsapi.sfdcConn) === false) {
                 if (PV.isNumber(pollInterval) === false) {
@@ -19,13 +19,13 @@ module.exports = {
                 }
 
                 var conn = new jsforce.Connection({
-                    loginUrl: jsapi.sfdc.url
+                    loginUrl: url
                 });
 
                 conn.bulk = jsapi.pvserver.Promise.promisifyAll(conn.bulk);
                 conn.bulk.pollInterval = pollInterval;
                 conn.bulk.pollTimeout = pollTimeout;
-                conn.login(jsapi.sfdc.username, jsapi.sfdc.password, function(err, userInfo) {
+                conn.login(username, password, function(err, userInfo) {
                     if (err) {
                         jsapi.logger.error(err);
                         resolve(false);
