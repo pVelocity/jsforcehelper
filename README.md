@@ -1,6 +1,6 @@
 # jsforcehelper
 
-This is an npm module design to perform common jsforce uses with pVelocity's [pvserver](https://github.com/pVelocity/pvserver).
+This is an npm module design to perform common [jsforce](https://jsforce.github.io/document/) uses with pVelocity's [pvserver](https://github.com/pVelocity/pvserver).
 
 ## Getting Started
 
