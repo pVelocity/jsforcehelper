@@ -45,18 +45,21 @@ jsfh.connect(jsapi).then(function(success) {
 ## Methods
 All methods implement [jsforce](https://jsforce.github.io/document/) methods to perform their action, returning a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
-* [connect](../docs/connect.md)
-* [connectWithSession](../docs/connectWithSession.md)
-* [describe](../docs/describe.md)
-* [query](../docs/query.md)
-* [insert](../docs/insert.md)
-* [update](../docs/update.md)
-* [delete](../docs/delete.md)
-* [upsert](../docs/upsert.md)
-* [bulkInsert](../docs/bulkInsert.md)
-* [bulkUpdate](../docs/bulkUpdate.md)
-* [bulkDelete](../docs/bulkDelete.md)
-* [bulkUpsert](../docs/bulkUpsert.md)
+* [connect](docs/connect.md)
+* [connectWithSession](docs/connectWithSession.md)
+
+* [describe](docs/describe.md)
+* [query](docs/query.md)
+
+* [insert](docs/insert.md)
+* [update](docs/update.md)
+* [delete](docs/delete.md)
+* [upsert](docs/upsert.md)
+
+* [bulkInsert](docs/bulkInsert.md)
+* [bulkUpdate](docs/bulkUpdate.md)
+* [bulkDelete](docs/bulkDelete.md)
+* [bulkUpsert](docs/bulkUpsert.md)
 
 ## License
 
