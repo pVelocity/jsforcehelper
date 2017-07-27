@@ -181,7 +181,7 @@ module.exports = {
         });
     },
 
-    insert: function(jsapi, objectName, records) {
+    insert: function(jsapi, objectName, records, throwError) {
         return new jsapi.pvserver.Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).create(records, function(err, res) {
                 if (err) {
@@ -200,10 +200,13 @@ module.exports = {
                     }
 
                     if (errors.length > 0) {
+                        if (PV.isBoolean(throwError) === false) {
+                            throwError = false;
+                        }
                         jsapi.logger.error({
                             message: errors.join('\n'),
                             code: 'Salesforce Insert Error'
-                        }, false);
+                        }, throwError);
                     }
                     resolve(response);
                 }
@@ -211,7 +214,7 @@ module.exports = {
         });
     },
 
-    delete: function(jsapi, objectName, records) {
+    delete: function(jsapi, objectName, records, throwError) {
         return new jsapi.pvserver.Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).del(records, function(err, res) {
                 if (err) {
@@ -230,10 +233,13 @@ module.exports = {
                     }
 
                     if (errors.length > 0) {
+                        if (PV.isBoolean(throwError) === false) {
+                            throwError = false;
+                        }
                         jsapi.logger.error({
                             message: errors.join('\n'),
                             code: 'Salesforce Delete Error'
-                        }, false);
+                        }, throwError);
                     }
                     resolve(response);
                 }
@@ -241,7 +247,7 @@ module.exports = {
         });
     },
 
-    update: function(jsapi, objectName, records) {
+    update: function(jsapi, objectName, records, throwError) {
         return new jsapi.pvserver.Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).update(records, function(err, res) {
                 if (err) {
@@ -260,10 +266,13 @@ module.exports = {
                     }
 
                     if (errors.length > 0) {
+                        if (PV.isBoolean(throwError) === false) {
+                            throwError = false;
+                        }
                         jsapi.logger.error({
                             message: errors.join('\n'),
                             code: 'Salesforce Update Error'
-                        }, false);
+                        }, throwError);
                     }
                     resolve(response);
                 }
@@ -271,7 +280,7 @@ module.exports = {
         });
     },
 
-    upsert: function(jsapi, objectName, records, extIdField) {
+    upsert: function(jsapi, objectName, records, extIdField, throwError) {
         return new jsapi.pvserver.Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).upsert(records, extIdField, function(err, res) {
                 if (err) {
@@ -290,10 +299,13 @@ module.exports = {
                     }
 
                     if (errors.length > 0) {
+                        if (PV.isBoolean(throwError) === false) {
+                            throwError = false;
+                        }
                         jsapi.logger.error({
                             message: errors.join('\n'),
                             code: 'Salesforce Upsert Error'
-                        }, false);
+                        }, throwError);
                     }
                     resolve(response);
                 }
@@ -301,7 +313,7 @@ module.exports = {
         });
     },
 
-    bulkInsert: function(jsapi, objectName, records) {
+    bulkInsert: function(jsapi, objectName, records, throwError) {
         return jsapi.sfdcConn.bulk.loadAsync(objectName, 'insert', records).then(function(res) {
             var errors = [];
             var response = PV.ensureArray(res);
@@ -312,10 +324,13 @@ module.exports = {
             }
 
             if (errors.length > 0) {
+                if (PV.isBoolean(throwError) === false) {
+                    throwError = false;
+                }
                 jsapi.logger.error({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Insert '
-                }, false);
+                }, throwError);
             }
             return response;
         }).catch(function(reason) {
@@ -324,7 +339,7 @@ module.exports = {
         });
     },
 
-    bulkDelete: function(jsapi, objectName, records) {
+    bulkDelete: function(jsapi, objectName, records, throwError) {
         return jsapi.sfdcConn.bulk.loadAsync(objectName, 'delete', records).then(function(res) {
             var errors = [];
             var response = PV.ensureArray(res);
@@ -335,10 +350,13 @@ module.exports = {
             }
 
             if (errors.length > 0) {
+                if (PV.isBoolean(throwError) === false) {
+                    throwError = false;
+                }
                 jsapi.logger.error({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Delete Error'
-                }, false);
+                }, throwError);
             }
             return response;
         }).catch(function(reason) {
@@ -347,7 +365,7 @@ module.exports = {
         });
     },
 
-    bulkUpdate: function(jsapi, objectName, records) {
+    bulkUpdate: function(jsapi, objectName, records, throwError) {
         return jsapi.sfdcConn.bulk.loadAsync(objectName, 'update', records).then(function(res) {
             var errors = [];
             var response = PV.ensureArray(res);
@@ -358,10 +376,13 @@ module.exports = {
             }
 
             if (errors.length > 0) {
+                if (PV.isBoolean(throwError) === false) {
+                    throwError = false;
+                }
                 jsapi.logger.error({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Update '
-                }, false);
+                }, throwError);
             }
             return response;
         }).catch(function(reason) {
@@ -370,7 +391,7 @@ module.exports = {
         });
     },
 
-    bulkUpsert: function(jsapi, objectName, records, extIdField) {
+    bulkUpsert: function(jsapi, objectName, records, extIdField, throwError) {
         return jsapi.sfdcConn.bulk.loadAsync(objectName, 'upsert', {
             'extIdField': extIdField
         }, records).then(function(res) {
@@ -383,10 +404,13 @@ module.exports = {
             }
 
             if (errors.length > 0) {
+                if (PV.isBoolean(throwError) === false) {
+                    throwError = false;
+                }
                 jsapi.logger.error({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Upsert Error'
-                }, false);
+                }, throwError);
             }
             return response;
         }).catch(function(reason) {
