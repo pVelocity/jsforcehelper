@@ -9,11 +9,15 @@ var jsforce = require('jsforce');
 var prom = require('bluebird');
 require('pvjs');
 
-var log = function(jsapi, message) {
+var log = function(jsapi, error) {
     if (PV.isObject(jsapi.logger) && PV.isFunction(jsapi.logger.error)) {
-        jsapi.logger.error(message);
+        jsapi.logger.error(error);
     } else {
-        console.log(message);
+        if (typeof error === 'object' && PV.isString(error.message)) {
+            console.log(error.message);
+        } else {
+            console.log(error);
+        }
     }
 };
 
@@ -37,7 +41,7 @@ module.exports = {
                 conn.bulk.pollTimeout = pollTimeout;
                 conn.login(username, password, function(err, userInfo) {
                     if (err) {
-                        log(err);
+                        log(jsapi, err);
                         resolve(false);
                     } else {
                         jsapi.sfdcConn = conn;
@@ -74,7 +78,7 @@ module.exports = {
                     jsapi.sfdcConn = conn;
                     resolve(true);
                 } catch (reason) {
-                    log(reason);
+                    log(jsapi, reason);
                     resolve(false);
                 }
             } else {
@@ -99,7 +103,7 @@ module.exports = {
             jsapi.sfdcConn.query(soql, function(err, result) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -129,7 +133,7 @@ module.exports = {
             jsapi.sfdcConn.queryMore(resp.nextLocator, function(err, result) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -159,7 +163,7 @@ module.exports = {
             jsapi.sfdcConn.describe(objectName, function(err, meta) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -196,7 +200,7 @@ module.exports = {
             jsapi.sfdcConn.sobject(objectName).create(records, function(err, res) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -213,7 +217,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        log({
+                        log(jsapi, {
                             message: errors.join('\n'),
                             code: 'Salesforce Insert Error'
                         }, throwError);
@@ -229,7 +233,7 @@ module.exports = {
             jsapi.sfdcConn.sobject(objectName).del(records, function(err, res) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -246,7 +250,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        log({
+                        log(jsapi, {
                             message: errors.join('\n'),
                             code: 'Salesforce Delete Error'
                         }, throwError);
@@ -262,7 +266,7 @@ module.exports = {
             jsapi.sfdcConn.sobject(objectName).update(records, function(err, res) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -279,7 +283,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        log({
+                        log(jsapi, {
                             message: errors.join('\n'),
                             code: 'Salesforce Update Error'
                         }, throwError);
@@ -295,7 +299,7 @@ module.exports = {
             jsapi.sfdcConn.sobject(objectName).upsert(records, extIdField, function(err, res) {
                 if (err) {
                     try {
-                        log(err);
+                        log(jsapi, err);
                     } catch (e) {
                         reject(err);
                     }
@@ -312,7 +316,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        log({
+                        log(jsapi, {
                             message: errors.join('\n'),
                             code: 'Salesforce Upsert Error'
                         }, throwError);
@@ -337,14 +341,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                log({
+                log(jsapi, {
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Insert '
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            log(reason);
+            log(jsapi, reason);
             return null;
         });
     },
@@ -363,14 +367,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                log({
+                log(jsapi, {
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Delete Error'
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            log(reason);
+            log(jsapi, reason);
             return null;
         });
     },
@@ -389,14 +393,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                log({
+                log(jsapi, {
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Update '
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            log(reason);
+            log(jsapi, reason);
             return null;
         });
     },
@@ -417,14 +421,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                log({
+                log(jsapi, {
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Upsert Error'
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            log(reason);
+            log(jsapi, reason);
             return null;
         });
     }
