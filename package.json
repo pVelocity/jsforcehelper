@@ -1,6 +1,6 @@
 {
   "name": "jsforcehelper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This is an npm module design to perform common jsforce uses with pVelocity's pvserver",
   "main": "jsforcehelper.js",
   "scripts": {
@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/pVelocity/jsforcehelper#readme",
   "dependencies": {
-    "jsforce": "^1.7.1"
+    "bluebird": "^3.5.0",
+    "jsforce": "^1.7.1",
+    "pvjs": "^1.0.1"
   }
 }

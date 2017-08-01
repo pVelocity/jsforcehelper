@@ -6,10 +6,20 @@
 /* jshint unused: false */
 
 var jsforce = require('jsforce');
+var prom = require('bluebird');
+require('pvjs');
+
+var log = function(jsapi, message) {
+    if (PV.isObject(jsapi.logger) && PV.isFunction(jsapi.logger.error)) {
+        jsapi.logger.error(message);
+    } else {
+        console.log(message);
+    }
+};
 
 module.exports = {
     connect: function(jsapi, username, password, url, pollInterval, pollTimeout) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             if (PV.isObject(jsapi.sfdcConn) === false) {
                 if (PV.isNumber(pollInterval) === false) {
                     pollInterval = 5000;
@@ -22,12 +32,12 @@ module.exports = {
                     loginUrl: url
                 });
 
-                conn.bulk = jsapi.pvserver.Promise.promisifyAll(conn.bulk);
+                conn.bulk = prom.promisifyAll(conn.bulk);
                 conn.bulk.pollInterval = pollInterval;
                 conn.bulk.pollTimeout = pollTimeout;
                 conn.login(username, password, function(err, userInfo) {
                     if (err) {
-                        jsapi.logger.error(err);
+                        log(err);
                         resolve(false);
                     } else {
                         jsapi.sfdcConn = conn;
@@ -41,7 +51,7 @@ module.exports = {
     },
 
     connectWithSession: function(jsapi, pollInterval, pollTimeout) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             if (PV.isObject(jsapi.sfdcConn) === false) {
                 if (PV.isNumber(pollInterval) === false) {
                     pollInterval = 5000;
@@ -59,12 +69,12 @@ module.exports = {
                     });
                     conn.bulk.pollInterval = pollInterval;
                     conn.bulk.pollTimeout = pollTimeout;
-                    conn.bulk = jsapi.pvserver.Promise.promisifyAll(conn.bulk);
+                    conn.bulk = prom.promisifyAll(conn.bulk);
 
                     jsapi.sfdcConn = conn;
                     resolve(true);
                 } catch (reason) {
-                    jsapi.logger.error(reason);
+                    log(reason);
                     resolve(false);
                 }
             } else {
@@ -85,11 +95,11 @@ module.exports = {
             'records': []
         };
 
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.query(soql, function(err, result) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -115,11 +125,11 @@ module.exports = {
     },
 
     queryMore: function(jsapi, resp) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.queryMore(resp.nextLocator, function(err, result) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -145,11 +155,11 @@ module.exports = {
     },
 
     describe: function(jsapi, objectName) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.describe(objectName, function(err, meta) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -182,11 +192,11 @@ module.exports = {
     },
 
     insert: function(jsapi, objectName, records, throwError) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).create(records, function(err, res) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -203,7 +213,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        jsapi.logger.error({
+                        log({
                             message: errors.join('\n'),
                             code: 'Salesforce Insert Error'
                         }, throwError);
@@ -215,11 +225,11 @@ module.exports = {
     },
 
     delete: function(jsapi, objectName, records, throwError) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).del(records, function(err, res) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -236,7 +246,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        jsapi.logger.error({
+                        log({
                             message: errors.join('\n'),
                             code: 'Salesforce Delete Error'
                         }, throwError);
@@ -248,11 +258,11 @@ module.exports = {
     },
 
     update: function(jsapi, objectName, records, throwError) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).update(records, function(err, res) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -269,7 +279,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        jsapi.logger.error({
+                        log({
                             message: errors.join('\n'),
                             code: 'Salesforce Update Error'
                         }, throwError);
@@ -281,11 +291,11 @@ module.exports = {
     },
 
     upsert: function(jsapi, objectName, records, extIdField, throwError) {
-        return new jsapi.pvserver.Promise(function(resolve, reject) {
+        return new prom(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).upsert(records, extIdField, function(err, res) {
                 if (err) {
                     try {
-                        jsapi.logger.error(err);
+                        log(err);
                     } catch (e) {
                         reject(err);
                     }
@@ -302,7 +312,7 @@ module.exports = {
                         if (PV.isBoolean(throwError) === false) {
                             throwError = false;
                         }
-                        jsapi.logger.error({
+                        log({
                             message: errors.join('\n'),
                             code: 'Salesforce Upsert Error'
                         }, throwError);
@@ -327,14 +337,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                jsapi.logger.error({
+                log({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Insert '
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            jsapi.logger.error(reason);
+            log(reason);
             return null;
         });
     },
@@ -353,14 +363,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                jsapi.logger.error({
+                log({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Delete Error'
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            jsapi.logger.error(reason);
+            log(reason);
             return null;
         });
     },
@@ -379,14 +389,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                jsapi.logger.error({
+                log({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Update '
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            jsapi.logger.error(reason);
+            log(reason);
             return null;
         });
     },
@@ -407,14 +417,14 @@ module.exports = {
                 if (PV.isBoolean(throwError) === false) {
                     throwError = false;
                 }
-                jsapi.logger.error({
+                log({
                     message: errors.join('\n'),
                     code: 'Salesforce Bulk Upsert Error'
                 }, throwError);
             }
             return response;
         }).catch(function(reason) {
-            jsapi.logger.error(reason);
+            log(reason);
             return null;
         });
     }

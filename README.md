@@ -12,17 +12,7 @@ Use the require statement to load the module.
 
 ```js
 var jsfh = require('jsforcehelper');
-```
-
-jsforcehelper requires the following packages to be passed as a libray object for each function call.
-
-```js
-require('pvjs');
-
-var pvh = require('pvserverhelper');
 var jsapi = {};
-jsapi.pvserver = require('pvserver');
-pvh.setupLogger(jsapi);
 ```
 The ``jsforce.Connection`` is accessible in ``jsapi.sfdcConn``.
 
