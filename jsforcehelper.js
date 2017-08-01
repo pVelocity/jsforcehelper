@@ -9,14 +9,20 @@ var jsforce = require('jsforce');
 var prom = require('bluebird');
 require('pvjs');
 
-var log = function(jsapi, error) {
+var log = function(jsapi, error, throwError) {
     if (PV.isObject(jsapi.logger) && PV.isFunction(jsapi.logger.error)) {
-        jsapi.logger.error(error);
+        jsapi.logger.error(error, throwError);
     } else {
         if (typeof error === 'object' && PV.isString(error.message)) {
             console.log(error.message);
         } else {
             console.log(error);
+        }
+        if (PV.isBoolean(throwError) === false) {
+            throwError = false;
+        }
+        if (throwError === true) {
+            throw error;
         }
     }
 };

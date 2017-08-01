@@ -1,8 +1,9 @@
-### ``bulkUpdate(jsapi, objectName, records)``
+### ``bulkUpdate(jsapi, objectName, records, throwError)``
 Bulk update ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.bulkUpdate(jsapi, 'Account', [

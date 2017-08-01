@@ -1,9 +1,10 @@
-### ``upsert(jsapi, objectName, records, extIdField)``
+### ``upsert(jsapi, objectName, records, extIdField, throwError)``
 Upsert ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
 - `extIdField` `<String>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.upsert(jsapi, 'Account', [

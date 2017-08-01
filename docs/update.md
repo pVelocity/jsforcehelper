@@ -1,8 +1,9 @@
-### ``update(jsapi, objectName, records)``
+### ``update(jsapi, objectName, records, throwError)``
 Update ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.update(jsapi, 'Account', [

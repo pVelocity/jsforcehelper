@@ -1,9 +1,10 @@
-### ``bulkUpsert(jsapi, objectName, records, extIdField)``
+### ``bulkUpsert(jsapi, objectName, records, extIdField, throwError)``
 Bulk upsert ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
 - `extIdField` `<String>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.bulkUpsert(jsapi, 'Account', [

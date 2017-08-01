@@ -1,8 +1,9 @@
-### ``bulkDelete(jsapi, objectName, records)``
+### ``bulkDelete(jsapi, objectName, records, throwError)``
 Bulk delete ``records`` from ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.bulkDelete(jsapi, 'Account', [

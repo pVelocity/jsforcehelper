@@ -1,8 +1,9 @@
-### ``bulkInsert(jsapi, objectName, records)``
+### ``bulkInsert(jsapi, objectName, records, throwError)``
 Bulk insert ``records`` into ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.bulkInsert(jsapi, 'Account', [

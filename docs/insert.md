@@ -1,8 +1,9 @@
-### ``insert(jsapi, objectName, records)``
+### ``insert(jsapi, objectName, records, throwError)``
 Insert ``records`` into ``objectName`` using an existing ``jsforce.Connection`` saved as ``jsapi.sfdcConn``.
 - `jsapi` `<Object>`
 - `objectName` `<String>`
 - `records` `<Array>`
+- `throwError` `<Boolean>`: Optional, default is `false`
 
 ```js
 jsfh.insert(jsapi, 'Account', [
