@@ -19,7 +19,7 @@ var log = function(jsapi, error, throwError) {
             console.log(error);
         }
         if (PV.isBoolean(throwError) === false) {
-            throwError = false;
+            throwError = true;
         }
         if (throwError === true) {
             throw error;
