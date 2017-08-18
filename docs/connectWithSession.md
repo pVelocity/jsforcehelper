@@ -1,5 +1,5 @@
 ### ``connectWithSession(jsapi, [pollInterval], [pollTimeout])``
-Connect to a known Salesforce server using an access token.
+Connect to a Salesforce server using an access token.
 - `jsapi` `<Object>`
 - `pollInterval` `<Number>`
 - `pollTimeout` `<Number>`

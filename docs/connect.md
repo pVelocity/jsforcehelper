@@ -1,5 +1,5 @@
 ### ``connect(jsapi, username, password, url, [pollInterval], [pollTimeout])``
-Connect to a known Salesforce server using a username and password.
+Connect to a Salesforce server ``url`` using a ``username`` and ``password``.
 - `jsapi` `<Object>`
 - `username` `<String>`
 - `password` `<String>`
