@@ -47,8 +47,11 @@ module.exports = {
                 conn.bulk.pollTimeout = pollTimeout;
                 conn.login(username, password, function(err, userInfo) {
                     if (err) {
-                        log(jsapi, err);
-                        resolve(false);
+                        try {
+                            log(jsapi, err);
+                        } catch (e) {
+                            reject(err);
+                        }
                     } else {
                         jsapi.sfdcConn = conn;
                         resolve(true);
@@ -83,9 +86,12 @@ module.exports = {
 
                     jsapi.sfdcConn = conn;
                     resolve(true);
-                } catch (reason) {
-                    log(jsapi, reason);
-                    resolve(false);
+                } catch (err) {
+                    try {
+                        log(jsapi, err);
+                    } catch (e) {
+                        reject(err);
+                    }
                 }
             } else {
                 resolve(true);
