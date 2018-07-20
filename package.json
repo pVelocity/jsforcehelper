@@ -22,7 +22,7 @@
   "homepage": "https://github.com/pVelocity/jsforcehelper#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "jsforce": "^1.8.4",
+    "jsforce": "^1.8.5",
     "pvjs": "^1.0.7"
   }
 }
