@@ -6,7 +6,7 @@
 /* jshint unused: false */
 
 var jsforce = require('jsforce');
-var prom = require('bluebird');
+let util = require('util');
 require('pvjs');
 
 var log = function(jsapi, error, throwError) {
@@ -29,7 +29,7 @@ var log = function(jsapi, error, throwError) {
 
 module.exports = {
     connect: function(jsapi, username, password, url, pollInterval, pollTimeout) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             if (PV.isObject(jsapi.sfdcConn) === false) {
                 if (PV.isNumber(pollInterval) === false) {
                     pollInterval = 5000;
@@ -42,7 +42,7 @@ module.exports = {
                     loginUrl: url
                 });
 
-                conn.bulk = prom.promisifyAll(conn.bulk);
+                conn.bulk.loadAsync = util.promisify(conn.bulk.load);
                 conn.bulk.pollInterval = pollInterval;
                 conn.bulk.pollTimeout = pollTimeout;
                 conn.login(username, password, function(err, userInfo) {
@@ -64,7 +64,7 @@ module.exports = {
     },
 
     connectWithSession: function(jsapi, pollInterval, pollTimeout) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             if (PV.isObject(jsapi.sfdcConn) === false) {
                 if (PV.isNumber(pollInterval) === false) {
                     pollInterval = 5000;
@@ -111,7 +111,7 @@ module.exports = {
             'records': []
         };
 
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.query(soql, function(err, result) {
                 if (err) {
                     try {
@@ -141,7 +141,7 @@ module.exports = {
     },
 
     queryMore: function(jsapi, resp) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.queryMore(resp.nextLocator, function(err, result) {
                 if (err) {
                     try {
@@ -171,7 +171,7 @@ module.exports = {
     },
 
     describe: function(jsapi, objectName) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.describe(objectName, function(err, meta) {
                 if (err) {
                     try {
@@ -208,7 +208,7 @@ module.exports = {
     },
 
     insert: function(jsapi, objectName, records, throwError) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).create(records, function(err, res) {
                 if (err) {
                     try {
@@ -241,7 +241,7 @@ module.exports = {
     },
 
     delete: function(jsapi, objectName, records, throwError) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).del(records, function(err, res) {
                 if (err) {
                     try {
@@ -274,7 +274,7 @@ module.exports = {
     },
 
     update: function(jsapi, objectName, records, throwError) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).update(records, function(err, res) {
                 if (err) {
                     try {
@@ -307,7 +307,7 @@ module.exports = {
     },
 
     upsert: function(jsapi, objectName, records, extIdField, throwError) {
-        return new prom(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             jsapi.sfdcConn.sobject(objectName).upsert(records, extIdField, function(err, res) {
                 if (err) {
                     try {

@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/pVelocity/jsforcehelper#readme",
   "dependencies": {
-    "bluebird": "^3.7.0",
-    "jsforce": "^1.9.2",
-    "pvjs": "^1.0.18"
+    "jsforce": "^1.9.3",
+    "pvjs": "^1.0.19"
   }
 }
