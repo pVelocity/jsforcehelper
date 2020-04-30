@@ -80,9 +80,10 @@ module.exports = {
             instanceUrl: jsapi.sfdc.instance_url,
             accessToken: jsapi.sfdc.access_token
           });
+
+          conn.bulk.loadAsync = util.promisify(conn.bulk.load);
           conn.bulk.pollInterval = pollInterval;
           conn.bulk.pollTimeout = pollTimeout;
-          conn.bulk = prom.promisifyAll(conn.bulk);
 
           jsapi.sfdcConn = conn;
           resolve(true);
