@@ -10,7 +10,7 @@ const crypto = require('crypto');
 let root = (typeof window === 'undefined') ? global : window;
 
 (function(root) {
-  let type = function(o) {
+  let type = function(o, t) {
     // handle null in old IE
     if (o === null) {
       return 'null';
@@ -64,7 +64,7 @@ let root = (typeof window === 'undefined') ? global : window;
 
   let generateMethod = function(t) {
     type['is' + t] = function(o) {
-      return type(o) === t.toLowerCase();
+      return type(o, t.toLowerCase()) === t.toLowerCase();
     };
   };
 
