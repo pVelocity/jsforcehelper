@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/pVelocity/jsforcehelper#readme",
   "dependencies": {
-    "jsforce": "^1.9.3",
-    "pvjs": "^1.1.4"
+    "jsforce": "^1.10.1",
+    "pvjs": "^1.1.7"
   }
 }
